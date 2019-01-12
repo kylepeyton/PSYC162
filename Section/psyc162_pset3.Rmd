@@ -1,0 +1,160 @@
+---
+title: "PSYC 162 Problem Set 3"
+author: ''
+date: "Due Monday 2/27/2017"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+header-includes: \usepackage{amsmath} \usepackage{float} \usepackage{bbm} \usepackage{accents}
+  \usepackage{caption} \usepackage{multirow,array} \usepackage{tikz} \usetikzlibrary{trees}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("hop")
+```
+
+# Problem 1
+
+Suppose that players in a game interact in the roles of "Signaler" and "Chooser" in a two stage interaction. In the "signaling stage", the Signaler has an opportunity to pay a cost to send a signal that is observed by the Chooser. In the "partner choice" stage, the Chooser decides whether to cooperate with the Signaler based on the signal she receives. 
+
+## Part 1: Partner choice stage 
+
+First consider the partner choice stage. If the Chooser (who moves first) plays TFT and the Signaler responds by also playing TFT then the Chooser pays $c$ in the first round then recieves $bw$ in the second round and then pays $cw^2$ in the third round and then earns $bw^3$ in the fourth round, and so on. The expected payoffs are then $\frac{bw-c}{1-w^2}$. The Signaler earns $b$ in the first round, then pays $cw$ in the second round and so on. So the expected payoffs are $\frac{b-cw}{1-w^2}$.
+
+If the Chooser plays TFT and the Signaler responds by playing ALLD, no payoffs are earned after the first round and the Chooser gets $-c$ while the Signaler gets $b$. If the Chooser plays ALLD then the Signaler responds by defecting **regardless** of whether her strategy is TFT or ALLD and both players earn nothing. The payoff matrix for the partner choice stage is then:
+
+\begin{table}[H]\large
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Signaler}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$TFT$}  & \multicolumn{1}{c}{$ALLD$} \\\cline{3-4}
+\multirow{2}*{Chooser}  & $TFT$ & $\frac{bw-c}{1-w^2}$,$\frac{b-cw}{1-w^2}$ & $-c$,$b$ \\\cline{3-4}
+& $ALLD$ & $0$,$0$ & $0$,$0$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+\noindent a) Show that [ALLD,ALLD] is always an equilibrium and [TFT,TFT] is an equilibrium when $w>\frac{c}{b}$. [10 points]
+
+\textbf{Solution:}
+
+$\pi_C(ALLD,ALLD) \geq \pi_C(TFT, ALLD)$ since 0 = 0 so we have a weak Nash here at [ALLD, ALLD].
+
+The Chooser's best response to TFT is also TFT when,
+
+\[
+\begin{aligned}
+\frac{bw-c}{1-w^2} & > 0  \\
+bw-c & > 0 \\
+w > \frac{c}{b}
+\end{aligned}
+\]
+
+The Signaler's best response to TFT is also TFT when,
+
+\[
+\begin{aligned}
+\frac{b-cw}{1-w^2} & > b  \\
+b-cw & > b(1-w^2) \\
+-cw & > -bw^2 \\
+w & > \frac{c}{b}
+\end{aligned}
+\]
+
+So [TFT,TFT] is a strict Nash when $w > \frac{c}{b}$
+
+
+Now suppose that $w$, the probability of playing another round, depends on the Signaler's "type" in the following way,
+
+
+\[ w = \left\{ \begin{array}{ll}
+         w_H > c/b & \mbox{if P2 is High Type};\\
+        w_L < c/b & \mbox{if P2 is Low Type}.\end{array} \right. \] 
+
+
+\noindent b) Complete the new payoff matrix below. What are the Nash equilibria when the Signaler is a High Type, and when the Signaler is a Low Type. How do these equilibria differ depending on the Signaler's type? [10 points]
+
+\begin{table}[H]\large
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Signaler}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{High Type}  & \multicolumn{1}{c}{Low Type} \\\cline{3-4}
+\multirow{2}*{Chooser}  & $TFT$ & &  \\\cline{3-4}
+& $ALLD$ &  &  \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+
+\textbf{Solution:}
+
+\begin{table}[H]\large
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Signaler}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{High Type}  & \multicolumn{1}{c}{Low Type} \\\cline{3-4}
+\multirow{2}*{Chooser}  & $TFT$ & $\frac{bw_H-c}{1-w_H^2}$,$\frac{b-cw_H}{1-w_H^2}$ & $-c$,$b$ \\\cline{3-4}
+& $ALLD$ & $0$,$0$ & $0$,$0$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+When the Signaler is a High Type, then $w_H > c/b$ and so both playing TFT is a Nash equilibrium. However, both playing ALLD is *also* a Nash equilibrium. When the Signaler is a Low Type $w_L < c/b$ so both playing ALLD is the only Nash equilibrium. Signalers of High Type will respond to TFT by playing TFT and Signalers of Low Type will respond to TFT with ALLD. 
+
+## Part 2: Signaling stage 
+
+Choosers cannot directly observe whether a Signaler is a high or low type. However, Signalers can send signals to provide information about their type to Choosers. Now let's consider Third Party Punishment (TPP) in which unaffected observers punish selfish behavior of a perpetrator towards a Victim.
+
+Like the first part, we model the signaling stage as a repeated Prisoner's dilemma except this game is now played between a Signaler and a Victim. In this game, the Signaler is the first mover and the Victim is the second mover. We start with a "punishment phase" where the Signaler can punish on behalf of the Victim. The next stage is a "cooperation phase", and the repeated PD from the first part applies for all future rounds. 
+
+So the Signaler moves first and chooses whether to punish on behalf of the Victim. Suppose it costs $k$ to punish, but punishing helps the Victim (by deterring future harm), delivering a benefit of $j$. If the Signaler chooses to punish then we move to the repeated prisoner's dilemma from Part 1-- the Victim decides whether to reciprocate the Signaler's punishment by cooperating which involves paying a cost $c$ to deliver a benefit $b$ to the Signaler. So the game proceeds analoguously to the Chooser and Signaler game in Part 1 so that both the Victim and the Signaler choose between playing TFT or ALLD. Thus, the payoff matrix is:
+
+\begin{table}[H]\large
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Victim strategy}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{TFT}  & \multicolumn{1}{c}{ALLD} \\\cline{3-4}
+\multirow{3}*{Signaler strategy}  & $Punish/TFT$ & $\frac{bw-c}{1-w^2}-k$,$\frac{b-cw}{1-w^2}+j$ & $-(c+k)$,$b+j$ \\\cline{3-4}
+& $Punish/ALLD$ & $-(c+k)+bw$,$b+j-cw$ & $-(c+k)$,$b+j$ \\\cline{3-4}
+& $No Punish/ALLD$ & $0$,$0$ & $0$,$0$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+\noindent c) When is Punish/TFT an equilibrium strategy in the signaling stage? What, if anything, can we infer about Signaler's that play this stategy? [10 points]
+
+\textbf{Solution:}
+
+In order for Punish/TFT to be an equilibrium in the signaling stage we need:
+
+\[
+\begin{aligned}
+\frac{bw-c}{1-w^2}-k & > -(c+k)+bw \\
+bw-c & > (bw-c)(1-w^2) \\
+bw-c & > bw-c - (bw-c)w^2 \\
+0 & > w^2(c-bw) \\
+w > \frac{c}{b}
+\end{aligned}
+\]
+
+and 
+
+\[
+\begin{aligned}
+\frac{b-cw}{1-w^2}+j & > b+j \\ 
+b-cw & > b(1-w^2) \\
+-cw & > -bw^2 \\
+\frac{c}{b} & < w
+\end{aligned}
+\]
+
+Therefore, we know that only High Type Signalers will play Punish/TFT since $w_H>\frac{c}{b}$! 
+
+\noindent d) When is NoPunish/ALLD an equilibrium strategy in the signaling stage? What, if anything, can we infer about Signaler's that play this stategy? [10 points]
+
+\textbf{Solution:}
+
+From part c) we know that the Signaler prefers Punish/TFT to Punish/ALLD when $w>\frac{c}{b}$. If $w = \frac{c}{b}$ then the Signaler's payoff from Punish/ALLD is $-(c+k) + c = -k$ and she has an incentive to move to NoPunish/ALLD when $w \leq \frac{c}{b}$. Therefore, when $w < \frac{c}{b}$ NoPunish/ALLD is a Nash equilibrium since the Victim is indifferent between TFT and ALLD when the Signaler plays NoPunish/ALLD. If a signaler is playing this strategy then we know they are a Low Type since $w_L < \frac{c}{b}$. 
+
+
+
+
+

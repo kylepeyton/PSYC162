@@ -1,0 +1,441 @@
+---
+title: "Evolution of Cooperation (Section 2)"
+author: ""
+date: "6 February 2017"
+output: 
+  beamer_presentation:
+  toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("hop")
+```
+
+# Review of Basic Games
+
+- Two strategies and two players. The players **simultaneously** decide which strategy to select. 
+- The **best response** is the strategy which produces the most favorable outcome for a player, *taking the other player's strategy as given*.
+- A set of (pure) strategies $(A_1,A_2)$ is a **Nash Equilibrium** if player 1 is playing a best response against player 2, and player 2 is playing a best response against player 1!
+- $U_1(A_1,A_2) > U_1(B_1,A_2)$ **and** $U_2(A_1,A_2) > U_2(A_1,B_2)$
+- In a NE, neither player has an incentive to switch strategies! 
+
+
+# Review of Basic Games
+
+```{r fig.height=5,fig.width=8}
+par(mfrow=c(2,2))
+gt_bimatrix(X = matrix(c(2,4,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Social Dilemma", labels1=c("Cooperate", "Defect"), 
+            nash = FALSE, arrow1= FALSE)
+gt_bimatrix(X = matrix(c(3,4,2,1),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Anti-coordination", labels1=c("Cooperate", "Defect"),
+            nash = FALSE, arrow1= FALSE)
+gt_bimatrix(X = matrix(c(4,2,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Coordination",  labels1=c("Cooperate", "Defect"),
+            nash = FALSE, arrow1= FALSE)
+
+```
+
+
+# Review of Basic Games
+
+Player 1's best responses to Player 2's strategies (vertical arrows):
+
+```{r fig.height=5,fig.width=8}
+par(mfrow=c(2,2))
+gt_bimatrix(X = matrix(c(2,4,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Social Dilemma", labels1=c("Cooperate", "Defect"), 
+            nash = FALSE, arrow2= TRUE, arrow1 = FALSE)
+gt_bimatrix(X = matrix(c(3,4,2,1),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Anti-coordination", labels1=c("Cooperate", "Defect"),
+            nash = FALSE, arrow2= TRUE, arrow1 = FALSE)
+gt_bimatrix(X = matrix(c(4,2,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Coordination",  labels1=c("Cooperate", "Defect"),
+            nash = FALSE, arrow2= TRUE, arrow1 = FALSE)
+
+```
+
+# Review of Basic Games
+
+Player 2's best responses to Player 1's strategies (horizontal arrows):
+
+```{r fig.height=5,fig.width=8}
+par(mfrow=c(2,2))
+gt_bimatrix(X = matrix(c(2,4,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Social Dilemma", labels1=c("Cooperate", "Defect"), 
+            nash = FALSE, arrow1= TRUE, arrow2 = TRUE)
+gt_bimatrix(X = matrix(c(3,4,2,1),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Anti-coordination", labels1=c("Cooperate", "Defect"),
+            nash = FALSE, arrow1= TRUE, arrow2 = TRUE)
+gt_bimatrix(X = matrix(c(4,2,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Coordination",  labels1=c("Cooperate", "Defect"),
+            nash = FALSE, arrow1= TRUE, arrow2 = TRUE)
+
+```
+
+# Review of Basic Games
+
+NE: P1 and P2 play their best responses. We are stuck here! 
+
+```{r fig.height=5,fig.width=8}
+par(mfrow=c(2,2))
+gt_bimatrix(X = matrix(c(2,4,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Social Dilemma", labels1=c("Cooperate", "Defect"))
+gt_bimatrix(X = matrix(c(3,4,2,1),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Anti-coordination", labels1=c("Cooperate", "Defect"))
+gt_bimatrix(X = matrix(c(4,2,1,3),2,2), tscale = .4, width1 = 3, alength = .15, 
+            main = "Coordination",  labels1=c("Cooperate", "Defect"))
+
+```
+
+# Social Preferences
+
+- "Homo-economicus": players are "selfish" and predicted behavior simply a function of individual payoffs.
+- But even in one-shot prisoner's dilemmas, rate of cooperation is typically 40-60%.
+- Why? If players have **social preferences**, behavior also depends on what happens to others and why these things happen. 
+- Can be "other-regarding"--my evaluation of some state depends on how you are doing. 
+- Can be "process-regarding"--my evaluation of some state depends on how it came about.
+- Examples: altruism, fairness, reciprocity and inequity averson.
+
+# Social Preferences (Altruism)
+
+```{r}
+par(mfrow=c(1,1))
+gt_bimatrix(X = matrix(c("b-c","b","-c",0),2,2), tscale = .75, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, main = "Social Dilemma", 
+            maincex = 1.5, nash = FALSE, arrow1=FALSE, 
+            arrow2 = FALSE, labels1=c("Cooperate", "Defect"))
+```
+
+# Social Preferences (Altruism)
+
+Let $b=2$, $c=1$, $\kappa\in(0,1)$ "altruism" parameter.
+
+|             | Selfish person | Altruistic person                |
+|-------------|----------------|----------------------------------|
+| $U(C,C)$  | $b-c = 1$     | $b-c+\kappa(b-c) = 1+\kappa$ |
+| $U(D,C)$  | $b = 2$        | $b-\kappa c = 2-\kappa$       |
+| $U(C,D)$  | $-c = -1$      | $-c + \kappa b = 2\kappa -1$   |
+| $U(D,D)$  | $0$           | $0$                              |
+
+Cooperative NE? 
+
+
+\[
+1+\kappa > 2-\kappa \implies \kappa > 1/2
+\]
+
+
+# Social Preferences (Altruism)
+
+Let $b=2$, $c=1$. Suppose $\kappa=3/4$ (high altruism):
+
+|             | Selfish person | Altruistic person                |
+|-------------|----------------|----------------------------------|
+| $U(C,C)$  | $b-c = 1$     | $b-c+\kappa(b-c) = 1+\kappa=1.75$ |
+| $U(D,C)$  | $b = 2$        | $b-\kappa c = 2-\kappa=1.25$       |
+| $U(C,D)$  | $-c = -1$      | $-c + \kappa b = 2\kappa -1=0.5$   |
+| $U(D,D)$  | $0$           | $0$                              |
+
+
+
+# Social Preferences (Altruism)
+
+Let $b=2$, $c=1$. Suppose $\kappa=3/4$ (high altruism):
+
+```{r}
+par(mfrow=c(1,2))
+gt_bimatrix(X = matrix(c(1, 2,-1, 0),2,2), tscale = .75, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social Dilemma?", 
+            maincex = 1.5, nash = FALSE, arrow1=FALSE, 
+            arrow2 = FALSE, labels1=c("Cooperate", "Defect"))
+gt_bimatrix(X = matrix(c(1.75, 1.25,-1, 0),2,2), tscale = 1, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social Dilemma?", 
+            maincex = 1.5, nash = FALSE, arrow1=FALSE, 
+            arrow2 = FALSE, labels1=c("Cooperate", "Defect"))
+```
+
+# Social Preferences (Altruism)
+
+Let $b=2$, $c=1$. Suppose $\kappa=3/4$ (high altruism):
+
+```{r}
+par(mfrow=c(1,2))
+gt_bimatrix(X = matrix(c(1, 2,-1, 0),2,2), tscale = .75, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social Dilemma?", 
+            maincex = 1.5, nash = FALSE, arrow2=TRUE, 
+            arrow1 = FALSE, labels1=c("Cooperate", "Defect"))
+gt_bimatrix(X = matrix(c(1.75, 1.25,-1, 0),2,2), tscale = 1, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social Dilemma?", 
+            maincex = 1.5, nash = FALSE, arrow2=TRUE, 
+            arrow1 = FALSE, labels1=c("Cooperate", "Defect"))
+```
+
+
+# Social Preferences (Altruism)
+
+Let $b=2$, $c=1$. Suppose $\kappa=3/4$ (high altruism):
+
+```{r}
+par(mfrow=c(1,2))
+gt_bimatrix(X = matrix(c(1, 2,-1, 0),2,2), tscale = .75, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social Dilemma?", 
+            maincex = 1.5, nash = FALSE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+gt_bimatrix(X = matrix(c(1.75, 1.25,-1, 0),2,2), tscale = 1, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social Dilemma?", 
+            maincex = 1.5, nash = FALSE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+```
+
+
+# Social Preferences (Altruism)
+
+Let $b=2$, $c=1$. Suppose $\kappa=3/4$ (high altruism):
+
+```{r}
+par(mfrow=c(1,2))
+gt_bimatrix(X = matrix(c(1, 2,-1, 0),2,2), tscale = .75, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social dilemma :-(", 
+            maincex = 1.5, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+gt_bimatrix(X = matrix(c(1.75, 1.25,-1, 0),2,2), tscale = 1, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Coordination game!", 
+            maincex = 1.5, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+```
+
+# Social Preferences (Inequity aversion)
+
+- P1's utility: $U_1=\pi_1 - \delta_1\max(\pi_2-\pi_1,0)-\alpha_1\max(\pi_1-\pi_2,0)$ 
+
+- $\delta_1$: how much P1 dislikes disadvantageous ($\pi_2-\pi_1>0$) differences.
+
+- $\alpha_1\in(0,1)$: how much P1 dislikes advantageous ($\pi_1-\pi_2>0$) differences.
+
+- If $\alpha_1=1$ then P1 cares only about P2's payoffs if they fall short of her own. 
+
+- If $\delta_1>1$, P1 is very adverse to disadvantageous differences.
+- P2's utility: $U_2=\pi_2 - \delta_2\max(\pi_1-\pi_2,0)-\alpha_2\max(\pi_2-\pi_1,0)$ 
+- When $\delta_1 \neq \delta_2$ and/or $\alpha_1\neq \alpha_2$, things get more complicated.
+
+# Social Preferences (Inequity aversion)
+
+Suppose $\alpha$, $\delta$ are the same for both players. Again consider social dilemma setup with $c=1,b=2$.
+
+|             | Selfish person | Inequity averse person                |
+|-------------|----------------|----------------------------------|
+| $U(C,C)$  | $b-c = 1$     | $b-c=1$                           |
+| $U(D,C)$  | $b = 2$        | $b-\alpha[b-(-c)]= 2-3\alpha$  |
+| $U(C,D)$  | $-c = -1$      | $-c - \delta[b-(-c)] = -1-3\delta$   |
+| $U(D,D)$  | $0$           | $0$                              |
+
+-Cooperative NE? 
+
+\[
+1> 2-3\alpha \implies \alpha > 1/3
+\]
+
+# Social Preferences (Inequity aversion)
+
+Let $b=2$, $c=1$. Suppose $\alpha = 3/4$, $\delta = 2$: 
+
+
+|             | Selfish person | Inequity averse person                |
+|-------------|----------------|----------------------------------|
+| $U(C,C)$  | $b-c = 1$     | $b-c=1$                           |
+| $U(D,C)$  | $b = 2$        | $b-\alpha[b-(-c)]= 2-3\alpha=-0.25$  |
+| $U(C,D)$  | $-c = -1$      | $-c - \delta[b-(-c)] = -1-3\delta=-7$   |
+| $U(D,D)$  | $0$           | $0$                              |
+
+
+# Social Preferences (Inequity aversion)
+
+Let $b=2$, $c=1$. Suppose $\alpha = 3/4$, $\delta = 2$: 
+
+```{r}
+par(mfrow=c(1,2))
+gt_bimatrix(X = matrix(c(1, 2,-1, 0),2,2), tscale = .75, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Social dilemma :-(", 
+            maincex = 1.5, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+gt_bimatrix(X = matrix(c(1, -0.25,-7, 0),2,2), tscale = 1.5, width1 = 3, 
+            labelsize =1, playersize = 1, alength = .15, 
+            main = "Coordination game!", 
+            maincex = 1.5, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+```
+
+# Evolutionary game theory
+
+Key concepts: 
+
+- Nash Equilibrium (NE) is a **static concept**. 
+- When NE is not unique, dynamics matter!
+- Evolutionary game theory lets *populations* evolve. 
+- Fraction $x$ of the population plays "strategy 1" and fraction $1-x$ plays "strategy 2".
+- With multiple NE (or none!), evolutionary game theory tells us how the population evolves.
+- An **Evolutionary Stable Strategy (ESS)** is a strategy which, if adopted by a population, cannot be invaded by a mutant strategy that is initially rare. 
+- Every NE is an ESS!
+- Strategy A **risk dominates** strategy B if $\pi_A > \pi_B$ at $x=1/2$.
+
+# Evolutionary game theory: "dominance"
+
+```{r, fig.height=3,fig.width=4}
+gt_bimatrix(X = matrix(c(4, 6,-2, 0),2,2), tscale = .5, width1 = 3, 
+            labelsize = .75, playersize = .75, alength = .15, 
+            maincex = 1, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+```
+
+- Mutual defection is the NE. This is also the ESS.
+- $\pi_C = 4x-2(1-x) = 6x-2$, $\pi_D = 6x+0(1-x)=6x$ 
+- At $x=1/2$, $\pi_C = 1 < \pi_D = 3$ so $D$ is **risk dominant**
+- Population will evolve to 100% defectors. 
+
+
+# Evolutionary game theory: "co-existence"
+
+```{r, fig.height=3,fig.width=4.5}
+gt_bimatrix(X = matrix(c(2, 3, 1, 0),2,2), tscale = .45, width1 = 3, 
+            labelsize =.75, playersize = .75, alength = .15, 
+            maincex = 1, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Dove", "Hawk"))
+```
+
+- DH and HD are both equilibria.
+- $\pi_D = 2x+(1-x) = x+1$, $\pi_H = 3x+0(1-x)=3x$ 
+- At $x=1/2$, $\pi_D =  3/2  = \pi_H = 3/2$ so neither **risk dominant**!
+- Population will evolve to stable mix of both types. 
+
+
+# Evolutionary game theory: "bistability"
+
+```{r, fig.height=3,fig.width=4}
+gt_bimatrix(X = matrix(c(1.75, 1.25,-1, 0),2,2), tscale = .75, width1 = 3, 
+            labelsize =.75, playersize = .75, alength = .15, 
+            maincex = 1, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("Cooperate", "Defect"))
+```
+
+- CC and DD are both equilibria, but mixture of types unstable!
+- $\pi_C = 1.75x-(1-x) = 2.75x-1,\pi_D = 1.25x+0(1-x)=1.25x$ 
+- At $x=1/2$, $\pi_C = 1.375 > \pi_D = 0.625$ so $C$ is **risk dominant**.
+- Population will *most likely* evolve to 100% Cooperators. 
+
+# Evolutionary Dynamics (worked example)
+
+```{r, fig.height=3,fig.width=4}
+gt_bimatrix(X = matrix(c(0, 1, 3, 2),2,2), tscale = .45, width1 = 3, 
+            labelsize =.75, playersize = .75, alength = .15, 
+            maincex = 1, nash = TRUE, arrow1=TRUE, 
+            arrow2 = TRUE, labels1=c("A", "B"))
+```
+
+- AB and BA are both equilibria.
+- $\pi_A = 0*x + 3(1-x)=3-3x, \pi_B = 1x+2(1-x)=2-x$
+- At $x=1/2$, $\pi_A = 3/2 = \pi_B = 3/2$ so neither **risk dominant**.
+
+
+# Evolutionary Dynamics (worked example)
+
+- Suppose we start in period $t$ with $x_t=0.1$ percent playing A and $(1-x_t)=0.9$ percent playing B in population.
+- If $\pi_A > \pi_B$ then $x_{t+1}$ increases by 0.1.
+- If $\pi_A < \pi_B$ then $x_{t+1}$ decreases by 0.1.
+- If $\pi_A=\pi_B$ then population is at equilibrium. 
+- If $x_{t^*}=0$ or $x_{t^*}=1$ then we are also at equilibrium.  
+
+```{r, echo=FALSE, results = "asis", warning=FALSE, message=FALSE}
+update <- function(x) {
+  pA <- 3-3*x
+  pB <- 2-x
+  
+  if(pA > pB) {
+    x <- x + 0.1
+    }
+  if(pA < pB){
+    x <- x - 0.1
+  }
+  if(abs(pA - pB) < 4e-8){
+    x <- x
+  }
+  
+  return(list(x=x, pA=pA, pB = pB))
+  
+}
+
+
+iter <- 10
+x <- rep(NA, iter)
+pA <- rep(NA, iter)
+pB <- rep(NA, iter)
+x[1] <- 0.1
+pA[1] <- 3-3*x[1]
+pB[1] <- 2-x[1]
+for(i in 2:iter){
+  x[i] <- update(x=x[i-1])$x
+  pA[i] <- update(x=x[i])$pA
+  pB[i] <- update(x=x[i])$pB
+}
+
+df <- data.frame(x, pA, pB, xnew = c(x[2:10],0.5))
+library("xtable")
+options(xtable.comment = FALSE)
+xt <- xtable(df[1:6,])
+names(xt) <- c("$x_t$", "$\\pi_A$", "$\\pi_B$", "$x_{t+1}$")
+print(xt, include.rownames = FALSE, sanitize.text.function=function(x){x})
+```
+
+# Evolutionary Dynamics (worked example)
+
+- What if we start at $x_t=0.9$ instead?
+
+```{r, echo=FALSE, results = "asis", warning=FALSE, message=FALSE}
+iter <- 10
+x <- rep(NA, iter)
+pA <- rep(NA, iter)
+pB <- rep(NA, iter)
+x[1] <- 0.9
+pA[1] <- 3-3*x[1]
+pB[1] <- 2-x[1]
+for(i in 2:iter){
+  x[i] <- update(x=round(x[i-1],2))$x
+  pA[i] <- update(x=x[i])$pA
+  pB[i] <- update(x=x[i])$pB
+}
+
+df2 <- data.frame(x, pA, pB, xnew = c(x[2:10],0.5))
+library("xtable")
+options(xtable.comment = FALSE)
+xt <- xtable(df2[1:6,])
+names(xt) <- c("$x_t$", "$\\pi_A$", "$\\pi_B$", "$x_{t+1}$")
+print(xt, include.rownames = FALSE, sanitize.text.function=function(x){x})
+```
+
+- Regardless of initial conditions, the population will end up with 50/50 mix. 
+
+# Evolutionary Dynamics (worked example)
+
+```{r, fig.height=4,fig.width=6}
+plot(df$x, type = "l", ylim = c(0,1), xlim = c(0,10), xlab = "t", ylab = "x",
+     col = "red", lwd = 2)
+lines(df2$x, col = "blue", lwd = 2)
+legend(6,1, c(expression(paste(x[0], " = ", 0.10)), 
+              expression(paste(x[0], " = ", 0.90))),
+       col = c("red","blue"), lty = c(1,1)
+       )
+```
+
+
+
+ 

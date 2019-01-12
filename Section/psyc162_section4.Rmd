@@ -1,0 +1,343 @@
+---
+title: "Evolution of Cooperation (Section 4)"
+author: ''
+date: "21 February 2017"
+output:
+  beamer_presentation: 
+     incremental: true
+  ioslides_presentation: default
+  slidy_presentation: default
+  toc: yes
+header-includes: \usepackage{amsmath} \usepackage{float} \usepackage{bbm} \usepackage{accents} \usepackage{multirow,array}
+  \usepackage{caption} \usepackage{tikz} \usetikzlibrary{calc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("hop")
+```
+
+# Overview
+- Explain extensive-form games or "game trees".
+- Illustration: withdrawal of later cooperation favors cooperation in repeated games.
+- Illustration: cooperative reputations are rewarded and favor cooperation when cost of information is low.
+- Example: using costly signaling to communicate an unobserved trait. 
+
+# Extensive-Form Games
+
+```{r, echo = FALSE}
+gt_bimatrix(X = matrix(c(1,2,0,-1),2,2), tscale = 1, width1 = 1, alength = .15,
+            main = "Chicken", labels1= c("C","D"), labels2 = c("C","D"),
+            maincex =2, mainline = -1)
+```
+
+
+# Extensive-Form Games
+```{r, echo = FALSE}
+H <- matrix(c("0", "0", "0", "0", "C", "C", "D", "D", "C", "D",  "C", "D"),4)
+P <- matrix(c(rep(1,4), rep(2,4)),4)
+U <- matrix(c(1,0,2,-1,1,2, 0, -1), 4)
+gt_tree(H,U,P, title = "Sequential Chicken", solution = FALSE)
+```
+
+
+# Extensive-Form Games
+
+```{r, echo = FALSE}
+H <- matrix(c("0", "0", "0", "0", "C", "C", "D", "D", "C", "D",  "C", "D"),4)
+P <- matrix(c(rep(1,4), rep(2,4)),4)
+U <- matrix(c(1,0,2,-1,1,2, 0, -1), 4)
+gt_tree(H,U,P, title = "Sequential Chicken", solution = TRUE)
+```
+
+# Extensive-Form Games
+
+\begin{center} 
+\includegraphics[]{trust_game.pdf} 
+\end{center}
+
+# Retaliation in repeated exchange game
+
+ 
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$TFT$}  & \multicolumn{1}{c}{$ALLD$} \\\cline{3-4}
+\multirow{2}*{}  & $TFT$ & $R/\rho$,$R/\rho$ & $S + \frac{(1-\rho)P}{\rho}$,$T + \frac{(1-\rho)P}{\rho}$ \\\cline{3-4}
+& $ALLD$ & $T + \frac{(1-\rho)P}{\rho}$,$S + \frac{(1-\rho)P}{\rho}$ & $P/\rho$,$P/\rho$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- Suppose $\rho$ is **termination** probability (note inversion from $w$!).
+- E.g. two TFT meet, cooperate on first round and continue for expected total duration of $1/\rho$ rounds.
+- E.g. TFT meets ALLD, receives $S$ in first round, then $P$ until game terminates. So multiply by prob. of 2nd round, $(1-\rho)$, and expected number of rounds at beginning of any period, $1/\rho$. 
+
+# Retaliation in repeated exchange game
+
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$TFT$}  & \multicolumn{1}{c}{$ALLD$} \\\cline{3-4}
+\multirow{2}*{}  & $TFT$ & $R/\rho$,$R/\rho$ & $S + \frac{(1-\rho)P}{\rho}$,$T + \frac{(1-\rho)P}{\rho}$ \\\cline{3-4}
+& $ALLD$ & $T + \frac{(1-\rho)P}{\rho}$,$S + \frac{(1-\rho)P}{\rho}$ & $P/\rho$,$P/\rho$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- Suppose $\tau$ is fraction playing TFT 
+- $\pi_{T}=\tau\frac{R}{\rho}+(1-\tau)\left[S+\frac{(1-\rho)P}{\rho}\right]$
+- $\pi_{D}=\tau\left[T+\frac{(1-\rho)P}{\rho}\right] + (1-\tau)\frac{P}{\rho}$
+- Unstable equilibrium at $\tau^*=\frac{P-S}{2P-T-S+(R-P)/\rho}$
+
+# Retaliation in repeated exchange game
+\vspace{-0.25cm}
+\begin{center} 
+\includegraphics[height=6cm, width=8cm]{retaliation_plot.pdf} 
+\end{center}
+\vspace{-0.5cm}
+- Increasing $\rho$ reduces expected cost of future retaliation for a defector.
+- Diminishes basin of attraction of cooperative equlibrium $(\tau=1)$ by shifting unstable equilibrium to $\tau^{+}$.
+
+# Reputation in exchange game w/ inspection
+
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$Inspect$}  & \multicolumn{1}{c}{$Defect$} \\\cline{3-4}
+\multirow{2}*{}  & $Inspect$ & $R-\delta$,$R-\delta$ & $P -\delta$,$P$ \\\cline{3-4}
+& $Defect$ & $P$,$P-\delta$ & $P$,$P$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- Inspectors: inspect and respond to a cooperative partner by cooperating and defector by defecting. 
+- Suppose $\delta > 0$ is "inspection cost" to examine partner's reputation. Fraction $\alpha$ are Inspectors.
+- $\pi_I=\alpha(R-\delta)+(1-\alpha)(P-\delta)$
+- $\pi_D=P$
+- Unstable equilibrium at $\alpha^*=\frac{\delta}{R-P}$ 
+
+# Reputation in exchange game w/ inspection
+\vspace{-0.25cm}
+\begin{center} 
+\includegraphics[height=6cm, width=8cm]{reputation_plot.pdf} 
+\end{center}
+\vspace{-0.5cm}
+- Decreasing $\delta$ makes it less costly to know your partner's type.
+- Increases basin of attraction of cooperative equilibrium ($\alpha=1$) by shifting unstable equilibrium to $\alpha^-$.
+
+# Signaling 
+
+- There are two players -- often called a "sender" and a "receiver"
+- The sender can be one of several *types*. 
+- The sender's type is **private information**: it is known to her, but not the receiver.
+- The receiver has a single type, so her payoff function is common knowledge. 
+
+
+1) **Pooling equilibria**: All the types of Player 1 choose the same action, thus revealing nothing to Player 2. 
+
+2) **Separating equilibria**: Each type of Player 1 chooses a different action, thus revealing his type in equilibrium to Player 2.
+
+
+# Signaling 
+
+Recipe for signaling game: 
+
+1) Nature chooses a type for Player 1 that Player 2 does not know, but cares about. 
+2) Player 1 has atleast as many actions as there are types, and each action imposes a different cost on each type. 
+3) Player 1 chooses an action first, and Player 2 then responds after observing Player 1’s choice. 
+4) Given Player 2’s belief about Player 1’s strategy, Player 2 updates their belief after observing Player 1’s choice. Player 2 then makes their choice as a best response to the updated beliefs.
+
+
+# Example: entry deterrence in elections
+
+- In US Congressional (House and Senate) elections, incumbents tend to raise far more than necessary to finance campaigns. 
+- In 2016 Senate races, average incumbent raised \$8.4m while average challenger raised only \$1.8m.  
+- Incumbent re-election rates are usually well above 80%. 
+- Q: Why do incumbent politicians work so hard to raise more campaign money than necessary to finance their campaigns? 
+- A: Fundraising is a costly signal of incumbent's strength.
+
+# Example: entry deterrence in elections
+\begin{center} 
+\includegraphics[]{house_plot.pdf} 
+\end{center}
+
+# Example: entry deterrence in elections
+\begin{center} 
+\includegraphics[]{senate_plot.pdf} 
+\end{center}
+
+# Example: entry deterrence in elections
+Setup for game:
+
+- Suppose both the Challenger (C) and the Incumbent (I) receive 1 unit of utility from elected office.  
+- "Nature" decides whether incumbent is either Strong (S) or Weak (W). 
+- Probability C wins against W is $\pi_w$, against S is $\pi_s$. 
+- $k$ is C's cost of running. Assume $\pi_w > k > \pi_s$.  
+- If $k>\pi_w$ then C never enters. If $k<\pi_s$ then C always enters. 
+- Types S and W incur different costs: $c_s < c_w$. 
+- Incumbent decides to build a war chest $WC$ or not $\neg WC$. 
+- After observing whether I builds a war chest, C decides whether to enter the race $E$ or not $\neg E$. 
+
+# Example: entry deterrence in elections
+
+\begin{tikzpicture}[scale=1.4,font=\footnotesize]
+\tikzset{
+% Two node styles for game trees: solid and hollow
+solid node/.style={circle,draw,inner sep=1.5,fill=black},
+hollow node/.style={circle,draw,inner sep=1.5}
+}
+
+% Specify spacing for each level of the tree
+\tikzstyle{level 1}=[level distance=12mm,sibling distance=25mm]
+\tikzstyle{level 2}=[level distance=15mm,sibling distance=15mm]
+\tikzstyle{level 3}=[level distance=17mm,sibling distance=10mm]
+% The Tree
+\node(0)[solid node,label=right:{Nature}]{}
+child[grow=up]{node[solid node,label=above:{\begin{tabular}{c}
+Incumbent\\ $S$
+\end{tabular}}] {}
+child[grow=left]{node(1)[solid node,label=below:{}]{}
+child{node[hollow node,label={[above,align=left]$(1-\pi_s-c_s,$\\$\pi_s-k)$}]{} edge from parent node [above]{$E$}}
+child{node[hollow node,label={[above,align=left]$(1-c_s,0)$}]{} edge from parent node [below]{$\neg E$}}
+edge from parent node [above]{$WC$}
+}
+child[grow=right]{node(3)[solid node,label=below:{}]{}
+child{node[hollow node,label={[above,align=left]$(1,0)$}]{} edge from parent node [below]{$\neg E$}}
+child{node[hollow node,label={[above,align=left]$(1-\pi_s,$\\$\pi_s-k)$}]{} edge from parent node [above]{$E$}}
+edge from parent node [above]{$\neg WC$}
+}
+edge from parent node [right]{}
+}
+child[grow=down]{node[solid node,label=below:{\begin{tabular}{c}
+$W$ \\ Incumbent
+\end{tabular}}] {}
+child[grow=left]{node(2)[solid node,label=above:{}]{}
+child{node[hollow node,label={[above,align=left]$(1-\pi_w-c_w,$\\$\pi_w-k)$}]{} edge from parent node [above]{$E$}}
+child{node[hollow node,label={[above,align=left]$(1-c_w,0)$}]{} edge from parent node [below]{$\neg E$}}
+edge from parent node [above]{$WC$}
+}
+child[grow=right]{node(4)[solid node,label=above:{}]{}
+child{node[hollow node,label={[above,align=left]$(1,0)$}]{} edge from parent node [below]{$\neg E$}}
+child{node[hollow node,label={[above,align=left]$(1-\pi_w,$\\$\pi_w-k)$}]{} edge from parent node [above]{$E$}}
+edge from parent node [above]{$\neg WC$}
+}
+edge from parent node [right]{$$}
+};
+
+% information set
+\draw[dashed,rounded corners=10]($(1) + (-.55,.55)$)rectangle($(2) +(.55,-.55)$);
+\draw[dashed,rounded corners=10]($(3) + (-.55,.55)$)rectangle($(4) +(.55,-.55)$);
+% specify mover at 2nd information set
+\node at ($(1)!.5!(2)$) {Challenger};
+\node at ($(3)!.5!(4)$) {Challenger};
+\end{tikzpicture}
+
+# Example: entry deterrence in elections
+
+**Recall**: $\pi_w > k > \pi_s$ and $c_s < c_w$
+
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Challenger}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$E$}  & \multicolumn{1}{c}{$\neg E$} \\\cline{3-4}
+\multirow{4}*{Incumbent}  & $WC|Strong$ & $1-\pi_s-c_s$,$\pi_s-k$ & $1-c_s$,$0$ \\\cline{3-4}
+& $WC|Weak$ & $1-\pi_w-c_w$,$\pi_w-k$ & $1-c_w$,$0$ \\\cline{3-4}
+& $\neg WC|Strong$ & $1-\pi_s$,$\pi_s-k$ & $1$,$0$ \\\cline{3-4}
+& $\neg WC|Weak$ & $1-\pi_w$,$\pi_w-k$ & $1$,$0$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- Only strong incumbent builds War Chest:
+
+\[
+\begin{aligned}
+U_I(WC|Strong,E) & >U_I(WC|Weak,E)\\
+1-\pi_s-c_s & > 1-\pi_w-c_w \\ 
+\pi_s + c_s & < \pi_w + c_w \\ 
+\end{aligned}
+\]
+
+# Example: entry deterrence in elections
+
+**Recall**: $\pi_w > k > \pi_s$ and $c_s < c_w$
+
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Challenger}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$E$}  & \multicolumn{1}{c}{$\neg E$} \\\cline{3-4}
+\multirow{4}*{Incumbent}  & $WC|Strong$ & $1-\pi_s-c_s$,$\pi_s-k$ & $1-c_s$,$0$ \\\cline{3-4}
+& $WC|Weak$ & $1-\pi_w-c_w$,$\pi_w-k$ & $1-c_w$,$0$ \\\cline{3-4}
+& $\neg WC|Strong$ & $1-\pi_s$,$\pi_s-k$ & $1$,$0$ \\\cline{3-4}
+& $\neg WC|Weak$ & $1-\pi_w$,$\pi_w-k$ & $1$,$0$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- Only strong incumbent builds War Chest:
+
+\[
+\begin{aligned}
+U_I(WC|Strong,\neg E) & > U_I(WC|Weak,\neg E) \\
+1-c_s & < 1-c_w \\
+c_s & < c_w
+\end{aligned}
+\]
+
+# Example: entry deterrence in elections
+
+**Recall**: $\pi_w > k > \pi_s$ and $c_s < c_w$
+
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Challenger}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$E$}  & \multicolumn{1}{c}{$\neg E$} \\\cline{3-4}
+\multirow{2}*{Incumbent}  & $WC|Strong$ & $1-\pi_s-c_s$,$\pi_s-k$ & $1-c_s$,$0$ \\\cline{3-4}
+& $\neg WC|Weak$ & $1-\pi_w$,$\pi_w-k$ & $1$,$0$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- Challenger does not enter if Incumbent builds war chest:
+
+\[
+\begin{aligned}
+U_C(WC|Strong,E) & < U_C(WC|Strong,\neg E)\\
+\pi_s - k < 0
+\end{aligned}
+\]
+
+
+# Example: entry deterrence in elections
+
+**Recall**: $\pi_w > k > \pi_s$ and $c_s < c_w$
+
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{Challenger}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$E$}  & \multicolumn{1}{c}{$\neg E$} \\\cline{3-4}
+\multirow{2}*{Incumbent}  & $WC|Strong$ & $1-\pi_s-c_s$,$\pi_s-k$ & $1-c_s$,$0$ \\\cline{3-4}
+& $\neg WC|Weak$ & $1-\pi_w$,$\pi_w-k$ & $1$,$0$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- Challenger only enters if Incumbent does *not* build war chest:
+
+\[
+\begin{aligned}
+U_C(\neg WC|Weak,E) & >U_C(\neg WC|Weak,\neg E)\\
+\pi_w - k > 0
+\end{aligned}
+\]
+
+
+
+
+
+
+
+
+
+

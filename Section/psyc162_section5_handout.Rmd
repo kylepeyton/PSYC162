@@ -1,0 +1,101 @@
+---
+title: "Evolution of Cooperation (Section 5)"
+author: ''
+date: "28 February 2017"
+output:
+  beamer_presentation: 
+     incremental: false
+  ioslides_presentation: default
+  slidy_presentation: default
+  toc: yes
+header-includes: \usepackage{amsmath} \usepackage{float} \usepackage{bbm} \usepackage{accents} \usepackage{multirow,array}
+  \usepackage{caption} \usepackage{tikz} \usetikzlibrary{calc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("hop")
+```
+
+# Overview
+- Part I: review of material on structured interactions (assortment)
+- Part II: work through last problem set together?
+- Part II: group discussion of readings w/ activity?
+
+# Structured interactions: assortment example
+- Assume individuals are either defectors or cooperators in single-period PD.
+- They periodically update their type in response to relative success of strategies (C and D)
+- Example: suppose people live in villages that are homogenous by type and some fraction $\alpha$ of their interactions take place **within the village**. 
+- The remaining $1-\alpha$ interactions take place in a city where types are well mixed. 
+- If the fraction of cooperators is $p$, probability that cooperator pairs with a fellow cooperator is: not $p$, but $\alpha + (1-\alpha)p$!
+- Probability that defector pairs with a defector is: $\alpha + (1-\alpha)(1-p)$!
+- **Note**: $\alpha=1$ is extreme segmentation; $\alpha=0$ is random pairing! 
+
+# Structured interactions: assortment example
+
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$C$}  & \multicolumn{1}{c}{$D$} \\\cline{3-4}
+\multirow{2}*{}  & $C$ & $R$,$R$ & $S$,$T$ \\\cline{3-4}
+& $D$ & $T$,$S$ & $P$,$P$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+
+- $\pi_C = \alpha R + (1-\alpha)[pR + (1-p)S]$
+- $\pi_D = \alpha P + (1-\alpha)[pT + (1-p)P]$
+- Equilibrium level of cooperation: $p^*=\frac{\alpha(S-R)+P-S}{(1-\alpha)(R-S-T+P)}$
+- May be stable or unstable, depending on payoff matrix! 
+- If unstable, $p^*$ is boundary between basin of attraction at $p=1$ and $p=0$.
+
+# Structured interactions: assortment example
+- $p^*=\frac{\alpha(S-R)+P-S}{(1-\alpha)(R-S-T+P)}$ 
+- For stable (interior) equilibrium, denominator must be < 0, requiring numerator to also be negative for $p>0$.
+- That is, we need: $(1-\alpha)(T-P) > (1-\alpha)(R-S)$.
+- Stability happens when reward from defection on a cooperator $(T-R)$ is bigger than the penalty of cooperating against a defector $(P-S)$!
+- If $p^*$ is stable, then increasing assortment will increase frequency of cooperators. 
+- If $p^*$ is unstable, increasing assortment will increase cooperative basin of attraction.
+
+# Structured interactions: assortment example
+\vspace{-0.25cm}
+\begin{center} 
+\includegraphics[height=6cm, width=8cm]{segmentation_plot.pdf} 
+\end{center}
+\vspace{-0.5cm}
+- Let $T=4, R=2, S=0, P=1$ so that $T>R>P>S$.
+- Solid lines: $\alpha=0$ (no assortment). Dotted lines: $\alpha=0.6$ 
+- $p^*=.50$ is stable equilibrium (Why?)
+
+# Structured interactions: assortment example
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$C$}  & \multicolumn{1}{c}{$D$} \\\cline{3-4}
+\multirow{2}*{}  & $C$ & $R$,$R$ & $S$,$T$ \\\cline{3-4}
+& $D$ & $T$,$S$ & $P$,$P$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+- Recall $C$ is ESS if:
+1) $\pi(C,C) > \pi(D,C)$ OR 
+2) $\pi(C,C)=\pi(D,C)$ and $\pi(C,D) > \pi(D,D)$
+- Probability D meets C: $(1-\alpha)p$
+- Probability C meets C: $\alpha + p(1-\alpha)$
+- Probability D meets D: $\alpha+(1-\alpha)(1-p)$
+- $\pi(C,C)= \alpha R+p(1-\alpha)R$; $\pi(D,C) = (1-\alpha)pT$
+
+# Structured interactions: assortment example
+\begin{table}
+\setlength{\extrarowheight}{5pt}
+\begin{tabular}{cc|c|c|}
+& \multicolumn{1}{c}{} & \multicolumn{2}{c}{}\\
+& \multicolumn{1}{c}{} & \multicolumn{1}{c}{$C$}  & \multicolumn{1}{c}{$D$} \\\cline{3-4}
+\multirow{2}*{}  & $C$ & $R=2$,$R=2$ & $S=0$,$T=4$ \\\cline{3-4}
+& $D$ & $T=4$,$S=0$ & $P=1$,$P=1$ \\\cline{3-4}
+\end{tabular}
+\end{table}
+- $\pi(C,C) = \alpha R+p(1-\alpha)R > \pi(D,C)= (1-\alpha)pT$
+- $1.2+0.8p > 1.6p$ at $\alpha=0.6$
+- $1.6 > 0.8$ at $\alpha=0.6, \ p^*=0.5$
+
